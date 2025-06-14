@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Counseling - MindCare</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-brain"></i>
+                <span>MindCare</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/counseling.html" class="nav-link active">Counseling</a></li>
+                <li><a href="/about.html" class="nav-link">About Us</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="counseling-container">
+        <!-- User Info Collection Phase -->
+        <div id="userInfoPhase" class="user-info-phase">
+            <div class="info-header">
+                <h2>Welcome to MindCare</h2>
+                <p>Before we begin your mental health assessment, please provide some basic information to personalize your experience.</p>
+            </div>
+            
+            <div class="info-card">
+                <form id="userInfoForm" class="user-info-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="age">Age</label>
+                            <input type="number" id="age" name="age" min="18" max="60" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <select id="gender" name="gender" required>
+                                <option value="">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                                <option value="prefer-not-to-say">Prefer not to say</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="department">Department</label>
+                        <select id="department" name="department" required>
+                            <option value="">Select Department</option>
+                            <option value="IT">Information Technology</option>
+                            <option value="HR">Human Resources</option>
+                            <option value="Finance">Finance</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="Operations">Operations</option>
+                            <option value="Sales">Sales</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reportTo">Send Report To</label>
+                        <select id="reportTo" name="reportTo" required>
+                            <option value="">Select Recipient</option>
+                            <option value="hr">HR Department</option>
+                            <option value="manager">Department Manager</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <i class="fas fa-arrow-right"></i>
+                        Continue to Assessment
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Assessment Phase -->
+        <div id="assessmentPhase" class="assessment-phase" style="display: none;">
+            <div class="assessment-header">
+                <h2>Mental Health Assessment</h2>
+                <p>Please answer the following questions honestly. This assessment will help us understand your current mental state.</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <span class="progress-text" id="progressText">Question 1 of 21</span>
+            </div>
+            
+            <div class="question-card" id="questionCard">
+                <div class="question-content">
+                    <h3 id="questionText">Loading question...</h3>
+                    <div class="answer-options">
+                        <label class="answer-option">
+                            <input type="radio" name="answer" value="0">
+                            <span class="option-text">🟢 Not at all true for me this week</span>
+                            <span class="option-value">0</span>
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="answer" value="1">
+                            <span class="option-text">🟡 Somewhat true at times this week</span>
+                            <span class="option-value">1</span>
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="answer" value="2">
+                            <span class="option-text">🟠 Mostly true for me this week</span>
+                            <span class="option-value">2</span>
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="answer" value="3">
+                            <span class="option-text">🔴 Very true for me most of the week</span>
+                            <span class="option-value">3</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="question-actions">
+                    <button id="prevBtn" class="btn btn-secondary" onclick="previousQuestion()" disabled>
+                        <i class="fas fa-arrow-left"></i>
+                        Previous
+                    </button>
+                    <button id="nextBtn" class="btn btn-primary" onclick="nextQuestion()" disabled>
+                        Next
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Phase -->
+        <div id="chatPhase" class="chat-phase" style="display: none;">
+            <div class="chat-container">
+                <div class="chat-header">
+                    <div class="chat-info">
+                        <div class="counselor-avatar">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="counselor-details">
+                            <h3>AI Counselor</h3>
+                            <span class="status online">Online</span>
+                        </div>
+                    </div>
+                    <div class="chat-actions">
+                        <button class="btn btn-secondary btn-sm" onclick="exportChat()">
+                            <i class="fas fa-download"></i>
+                            Export
+                        </button>
+                        <button class="btn btn-danger btn-sm" onclick="endSession()">
+                            <i class="fas fa-times"></i>
+                            End Session
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message bot-message">
+                        <div class="message-avatar">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="message-content">
+                            <p>Hello! I'm your AI counselor. Based on your assessment, I'm here to provide personalized support and guidance. How are you feeling right now?</p>
+                            <span class="message-time">Just now</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chat-input-container">
+                    <div class="chat-input">
+                        <input type="text" id="messageInput" placeholder="Type your message here..." onkeypress="handleKeyPress(event)">
+                        <button onclick="sendMessage()" class="send-btn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <div class="quick-responses">
+                        <button class="quick-response" onclick="sendQuickResponse('I feel anxious')">I feel anxious</button>
+                        <button class="quick-response" onclick="sendQuickResponse('I need help')">I need help</button>
+                        <button class="quick-response" onclick="sendQuickResponse('Tell me more')">Tell me more</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="session-info">
+                <div class="info-card">
+                    <h4>Session Progress</h4>
+                    <div class="session-stats">
+                        <div class="stat">
+                            <span class="stat-label">Duration</span>
+                            <span class="stat-value" id="sessionDuration">00:00</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Messages</span>
+                            <span class="stat-value" id="messageCount">1</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Assessment Results</h4>
+                    <div id="assessmentResults">
+                        <div class="result-item">
+                            <span class="result-label">Depression:</span>
+                            <span class="result-value" id="depressionScore">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Anxiety:</span>
+                            <span class="result-value" id="anxietyScore">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Stress:</span>
+                            <span class="result-value" id="stressScore">-</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Emergency Contacts</h4>
+                    <div class="emergency-contacts">
+                        <p><strong>Crisis Hotline:</strong> 988</p>
+                        <p><strong>Emergency:</strong> 9152987821</p>
+                        <button class="btn btn-danger btn-sm btn-full" onclick="emergencyContact()">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            Emergency Help
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Phase -->
+        <div id="resultsPhase" class="results-phase" style="display: none;">
+            <div class="results-container">
+                <div class="results-header">
+                    <h2>Your Mental Health Report</h2>
+                    <p>Based on your assessment and counseling session</p>
+                </div>
+                
+                <div class="results-content">
+                    <div class="results-scores">
+                        <div class="score-card depression">
+                            <div class="score-icon">
+                                <i class="fas fa-sad-tear"></i>
+                            </div>
+                            <div class="score-details">
+                                <h3>Depression</h3>
+                                <div class="score-value" id="finalDepressionScore">0</div>
+                                <div class="score-level" id="depressionLevel">Normal</div>
+                            </div>
+                        </div>
+                        
+                        <div class="score-card anxiety">
+                            <div class="score-icon">
+                                <i class="fas fa-heart-broken"></i>
+                            </div>
+                            <div class="score-details">
+                                <h3>Anxiety</h3>
+                                <div class="score-value" id="finalAnxietyScore">0</div>
+                                <div class="score-level" id="anxietyLevel">Normal</div>
+                            </div>
+                        </div>
+                        
+                        <div class="score-card stress">
+                            <div class="score-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <div class="score-details">
+                                <h3>Stress</h3>
+                                <div class="score-value" id="finalStressScore">0</div>
+                                <div class="score-level" id="stressLevel">Normal</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="recommendations">
+                        <h3>Personalized Recommendations</h3>
+                        <div id="recommendationsList">
+                            <!-- Recommendations will be populated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="results-actions">
+                        <button class="btn btn-primary" onclick="downloadReport()">
+                            <i class="fas fa-download"></i>
+                            Download Report
+                        </button>
+                        <button class="btn btn-success" onclick="startNewSession()">
+                            <i class="fas fa-refresh"></i>
+                            New Session
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="counseling.js"></script>
+</body>
+</html>

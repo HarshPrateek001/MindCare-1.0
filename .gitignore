@@ -1,0 +1,19 @@
+# Ignore .env file
+.env
+
+# Ignore VS Code settings
+.vscode/
+
+# Ignore SQLite DB or other generated files
+*.db
+
+# Ignore compiled files
+__pycache__/
+*.pyc
+
+# Ignore node modules (if using Node.js)
+node_modules/
+
+# Ignore build folders (if any)
+dist/
+build/
