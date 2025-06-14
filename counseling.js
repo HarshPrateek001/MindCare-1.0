@@ -1,20 +1,19 @@
 // counseling.js - Consolidated and Corrected Code
 
 // --- API Configuration - Updated to handle different environments ---
+// --- API Configuration: Handles dev (localhost) and prod (Railway) ---
 const API_BASE_URL = (() => {
-  const currentHost = window.location.origin;
-  console.log("Current host:", currentHost);
+  const hostname = window.location.hostname;
 
-  // If running on localhost:8000 (FastAPI server), use the same origin
-  if (currentHost.includes("localhost:8000") || currentHost.includes("127.0.0.1:8000")) {
-    return currentHost + "/api";
+  // Development environment (localhost)
+  if (hostname === "localhost" || hostname === "127.0.0.1") {
+    return "http://localhost:8000/api";
   }
 
-  // Default fallback (e.g., if hosted somewhere else)
-  return "http://localhost:8000/api";
+  // Production (Netlify/Vercel frontend calling Railway backend)
+  return "https://mindcare-backend.up.railway.app/api";
 })();
 
-console.log("API Base URL:", API_BASE_URL);
 
 
 // --- DASS-21 Questions ---
