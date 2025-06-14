@@ -1,5 +1,7 @@
-setuptools>=42
-wheel
+setuptools>=65.0.0
+wheel>=0.40.0
+build>=1.0.3
+
 fastapi==0.104.1
 uvicorn[standard]==0.24.0
 pydantic[email]==2.5.0
